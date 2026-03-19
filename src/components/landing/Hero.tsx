@@ -38,7 +38,22 @@ const Hero = ({ onApply }: HeroProps) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6"
+        className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-6"
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-gold" />
+        </span>
+        <span className="text-[11px] font-semibold tracking-wide uppercase text-white/90">
+          Cohorte Sept. 2026 — Candidatures ouvertes
+        </span>
+      </motion.div>
+
+      <motion.h1
+        className="text-[1.65rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-3xl relative text-white"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.15 }}
       >
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
