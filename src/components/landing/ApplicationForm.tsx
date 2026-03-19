@@ -279,6 +279,8 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
                   <SelectWrapper>
                     <select className={selectClass} value={data.niveauEtude} onChange={(e) => update("niveauEtude", e.target.value)}>
                       <option value="">Sélectionnez</option>
+                      <option value="Diplôme d'État">Diplôme d'État (D6, obtenu ou en cours)</option>
+                      <option value="Graduat">Graduat (Bac+3, en cours ou obtenu)</option>
                       <option value="Licence">Licence (en cours ou obtenue)</option>
                       <option value="Master">Master (en cours ou obtenu)</option>
                       <option value="Doctorat">Doctorat</option>
