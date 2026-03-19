@@ -43,11 +43,17 @@ interface ApplicationFormProps {
 }
 
 const DRCFlag = () => (
-  <svg width="20" height="14" viewBox="0 0 20 14" className="rounded-sm shrink-0">
-    <rect width="20" height="14" fill="#007FFF" />
-    <line x1="0" y1="0" x2="20" y2="14" stroke="#CE1021" strokeWidth="2.5" />
-    <line x1="0" y1="14" x2="20" y2="0" stroke="#CE1021" strokeWidth="2.5" />
-    <rect x="1" y="1" width="4" height="3" fill="#F7D618" />
+  <svg width="24" height="16" viewBox="0 0 900 600" className="rounded-[3px] shrink-0 border border-border/30">
+    <rect width="900" height="600" fill="#007FFF" />
+    <g>
+      <line x1="0" y1="0" x2="900" y2="600" stroke="#CE1021" strokeWidth="60" />
+      <line x1="0" y1="0" x2="900" y2="600" stroke="#F7D618" strokeWidth="30" />
+      <line x1="900" y1="0" x2="0" y2="600" stroke="#CE1021" strokeWidth="60" />
+      <line x1="900" y1="0" x2="0" y2="600" stroke="#F7D618" strokeWidth="30" />
+    </g>
+    <g transform="translate(100,32)">
+      <polygon points="45,0 58,30 90,35 65,55 72,90 45,72 18,90 25,55 0,35 32,30" fill="#F7D618" />
+    </g>
   </svg>
 );
 
