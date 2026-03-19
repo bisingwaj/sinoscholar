@@ -121,4 +121,5 @@ export const objectifsAcademiques = [
   "Programme d'échange",
   "Recherche post-doctorale",
   "Certificat spécialisé",
+  "Études de premier cycle (après Diplôme d'État)",
 ];

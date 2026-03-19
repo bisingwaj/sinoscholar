@@ -348,6 +348,24 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
             {step === 6 && (
               <>
                 <div>
+                  <label className={labelClass}>Avez-vous un passeport valide ?</label>
+                  <ToggleGroup options={["Oui", "Non"]} value={data.passeport} field="passeport" />
+                </div>
+                <div>
+                  <label className={labelClass}>Avez-vous une carte jaune (vaccination) ?</label>
+                  <ToggleGroup options={["Oui", "Non"]} value={data.carteVaccination} field="carteVaccination" />
+                </div>
+                <div className="p-3 rounded-lg bg-secondary/50 border border-border">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Ces documents ne sont pas obligatoires pour postuler, mais ils seront nécessaires pour la suite du processus.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {step === 7 && (
+              <>
+                <div>
                   <label className={labelClass}>Avez-vous déjà candidaté à une bourse ?</label>
                   <ToggleGroup options={["Oui", "Non"]} value={data.dejaCandidate} field="dejaCandidate" />
                 </div>
