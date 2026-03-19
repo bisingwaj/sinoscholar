@@ -4,15 +4,10 @@ const Footer = () => (
   <footer className="border-t border-border section-padding">
     <div className="container max-w-3xl mx-auto">
       <img src={logoHorizontal} alt="PCARC Logo" className="h-12 mb-8" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-muted-foreground">
-        <div>
-          <p className="font-semibold text-primary mb-1">Kinshasa</p>
-          <p>[Adresse du bureau — Kinshasa]</p>
-        </div>
-        <div>
-          <p className="font-semibold text-primary mb-1">Lubumbashi</p>
-          <p>[Adresse du bureau — Lubumbashi]</p>
-        </div>
+      <div className="text-sm text-muted-foreground">
+        <p className="font-semibold text-primary mb-1">Kinshasa</p>
+        <p>5ème niveau, Immeuble Ex-Sozacom, Boulevard du 30 Juin, Commune de la Gombe, Kinshasa, République Démocratique du Congo.</p>
+        <p className="mt-3">+243 995 892 888 · drc@sinoscholar.org</p>
       </div>
       <div className="mt-10 pt-6 border-t border-border text-xs text-muted-foreground">
         © {new Date().getFullYear()} PCARC — Programme de Coopération Académique RDC–Chine. Tous droits réservés.
