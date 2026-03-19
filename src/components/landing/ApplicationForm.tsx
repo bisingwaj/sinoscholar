@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, ChevronDown, User, MapPin, GraduationCap, Phone, Target, HelpCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, User, MapPin, GraduationCap, Phone, Target, Shield, HelpCircle } from "lucide-react";
 import { provinces, objectifsAcademiques } from "@/data/rdc-geo";
 
 interface FormData {
