@@ -15,13 +15,15 @@ interface FormData {
   whatsapp: string;
   objectif: string;
   projet: string;
+  passeport: string;
+  carteVaccination: string;
   dejaCandidate: string;
 }
 
 const initialData: FormData = {
   nom: "", age: "", province: "", ville: "", sexe: "",
   niveauEtude: "", domaineEtude: "", email: "", whatsapp: "",
-  objectif: "", projet: "", dejaCandidate: "",
+  objectif: "", projet: "", passeport: "", carteVaccination: "", dejaCandidate: "",
 };
 
 const TOTAL_STEPS = 6;
