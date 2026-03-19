@@ -50,22 +50,7 @@ const Hero = ({ onApply }: HeroProps) => {
       </motion.div>
 
       <motion.h1
-        className="text-[1.65rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-3xl relative text-white"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.15 }}
-      >
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
-        </span>
-        <span className="text-[11px] font-semibold tracking-wide uppercase text-accent">
-          Cohorte Sept. 2026 — Candidatures ouvertes
-        </span>
-      </motion.div>
-
-      <motion.h1
-        className="text-[1.65rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-3xl relative"
+        className="relative text-[1.65rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-3xl text-white"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.15 }}
@@ -88,7 +73,7 @@ const Hero = ({ onApply }: HeroProps) => {
       </motion.h1>
 
       <motion.p
-        className="mt-5 text-[15px] sm:text-base md:text-lg text-muted-foreground max-w-md leading-relaxed"
+        className="relative mt-5 text-[15px] sm:text-base md:text-lg text-white/70 max-w-md leading-relaxed"
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -98,7 +83,7 @@ const Hero = ({ onApply }: HeroProps) => {
 
       <motion.button
         onClick={onApply}
-        className="mt-8 group relative px-9 py-3.5 bg-primary text-primary-foreground font-semibold text-[15px] rounded-lg hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
+        className="relative mt-8 group px-9 py-3.5 bg-white text-primary font-semibold text-[15px] rounded-lg hover:shadow-lg hover:shadow-white/20 transition-all duration-300"
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.45 }}
@@ -110,7 +95,7 @@ const Hero = ({ onApply }: HeroProps) => {
       </motion.button>
 
       <motion.p
-        className="mt-3 text-[11px] text-muted-foreground/60"
+        className="relative mt-3 text-[11px] text-white/40"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
