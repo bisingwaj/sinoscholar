@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 260" width="920" height="260">
+
+  <!-- Decorative lines top/bottom -->
+  <line x1="290" y1="22" x2="900" y2="22" stroke="#FFFFFF" stroke-width="0.6" opacity="0.12"/>
+  <line x1="290" y1="238" x2="900" y2="238" stroke="#FFFFFF" stroke-width="0.6" opacity="0.12"/>
+
+  <!-- ═══ EMBLÈME ═══ -->
+  <!-- Cercle extérieur -->
+  <circle cx="130" cy="130" r="112" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+  <!-- Cercle intérieur léger -->
+  <circle cx="130" cy="130" r="99" fill="none" stroke="#FFFFFF" stroke-width="0.6" opacity="0.35"/>
+
+  <!-- Axe horizontal fantôme -->
+  <line x1="30" y1="130" x2="230" y2="130" stroke="#FFFFFF" stroke-width="0.7" opacity="0.18"/>
+
+  <!-- Demi-cercle supérieur -->
+  <path d="M 55 130 A 75 75 0 0 1 205 130"
+        fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.9"/>
+  <!-- Demi-cercle inférieur -->
+  <path d="M 55 130 A 75 75 0 0 0 205 130"
+        fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.9"/>
+
+  <!-- Losange central -->
+  <polygon points="130,100 148,130 130,160 112,130"
+           fill="none" stroke="#FFFFFF" stroke-width="1.6" opacity="0.9"/>
+
+  <!-- Trait rouge horizontal (lien RDC–Chine) -->
+  <line x1="55" y1="130" x2="205" y2="130"
+        stroke="#C8102E" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Nœud gauche (RDC) -->
+  <circle cx="55"  cy="130" r="5" fill="#FFFFFF"/>
+  <!-- Nœud droit (Chine) -->
+  <circle cx="205" cy="130" r="5" fill="#C8102E"/>
+  <!-- Nœud central (programme) -->
+  <circle cx="130" cy="130" r="4.5" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2"/>
+
+  <!-- Accents dorés diagonaux -->
+  <line x1="112" y1="113" x2="100" y2="101" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+  <line x1="148" y1="113" x2="160" y2="101" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+  <line x1="112" y1="147" x2="100" y2="159" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+  <line x1="148" y1="147" x2="160" y2="159" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- ═══ TYPOGRAPHIE ═══ -->
+  <!-- Acronyme -->
+  <text x="290" y="107"
+        font-family="'Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="800" font-size="46" letter-spacing="10"
+        fill="#FFFFFF">PCARC</text>
+
+  <!-- Filet rouge signature -->
+  <rect x="290" y="118" width="340" height="2" fill="#C8102E"/>
+
+  <!-- Nom complet ligne 1 -->
+  <text x="291" y="150"
+        font-family="'Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="500" font-size="16.5" letter-spacing="2.2"
+        fill="#FFFFFF">PROGRAMME DE COOPÉRATION</text>
+
+  <!-- Nom complet ligne 2 -->
+  <text x="291" y="173"
+        font-family="'Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="500" font-size="16.5" letter-spacing="2.2"
+        fill="#FFFFFF">ACADÉMIQUE  RDC – CHINE</text>
+
+  <!-- Filet léger -->
+  <line x1="290" y1="189" x2="630" y2="189" stroke="#FFFFFF" stroke-width="0.6" opacity="0.15"/>
+
+  <!-- Tagline -->
+  <text x="291" y="211"
+        font-family="'Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="300" font-size="9.5" letter-spacing="4"
+        fill="#FFFFFF" opacity="0.5">EXCELLENCE  ·  ÉCHANGE  ·  INNOVATION</text>
+
+</svg>

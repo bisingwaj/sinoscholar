@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import embleme from "@/assets/embleme.svg";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 interface HeroProps {
   onApply: () => void;
@@ -7,102 +7,131 @@ interface HeroProps {
 
 const Hero = ({ onApply }: HeroProps) => {
   return (
-    <section className="relative min-h-[85vh] flex flex-col items-center justify-center px-6 pt-24 pb-16 text-center overflow-hidden bg-primary">
-      {/* Diagonal lines pattern */}
-      <div className="absolute inset-0 opacity-[0.07]" style={{
-        backgroundImage: `repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 30px,
-          hsl(0 0% 100%) 30px,
-          hsl(0 0% 100%) 31px
-        )`,
-      }} />
+    <>
+      {/* =========================================
+          MOBILE VERSION (Strictly Original)
+          ========================================= */}
+      <div className="md:hidden">
+        <section className="min-h-[90vh] pt-32 pb-24 px-8 flex flex-col justify-center bg-[#F8F9FA] border-b border-gray-200">
+          <div className="w-full flex flex-col mt-auto mb-auto text-left">
+            <div className="w-12 h-1 bg-[#DE2910] mb-12"></div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#DE2910] mb-8">
+              Candidature Bourses d'Études - Cohorte 2026
+            </p>
+            <h1 className="text-[38px] sm:text-[48px] font-black uppercase tracking-tighter leading-[1.0] mb-12 text-[#0B3D91]">
+              PROGRAMME DE<br/>COOPÉRATION<br/>ACADÉMIQUE<br/><span className="text-[#0B3D91] opacity-60">SINO-CONGOLAISE.</span>
+            </h1>
+            <p className="text-[15px] sm:text-base text-[#0B3D91] leading-relaxed font-medium pl-6 border-l-2 border-[#DE2910] max-w-sm mb-16 opacity-90">
+              Une initiative d'excellence offrant des bourses d'études complètes pour accéder aux meilleures institutions universitaires chinoises.
+            </p>
+            
+            <div className="flex flex-col space-y-4 w-full">
+              <button 
+                onClick={onApply} 
+                className="w-full bg-[#0B3D91] text-white px-8 py-6 text-[11px] sm:text-xs font-black uppercase tracking-[0.2em] shadow-xl hover:bg-[#DE2910] transition-all rounded-none"
+              >
+                DÉPOSER MA CANDIDATURE
+              </button>
+              <button 
+                onClick={() => { document.getElementById('pourquoi-chine')?.scrollIntoView({ behavior: 'smooth' }); }} 
+                className="w-full border-2 border-[#0B3D91] bg-transparent text-[#0B3D91] hover:bg-[#0B3D91] hover:text-white px-8 py-6 text-[11px] sm:text-xs font-black uppercase tracking-[0.2em] transition-all rounded-none"
+              >
+                CONSULTER LE PROTOCOLE
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
 
-      {/* Large geometric diamond shapes */}
-      <div className="absolute inset-0 opacity-[0.04]" style={{
-        backgroundImage: `
-          linear-gradient(45deg, hsl(0 0% 100%) 25%, transparent 25%),
-          linear-gradient(-45deg, hsl(0 0% 100%) 25%, transparent 25%),
-          linear-gradient(45deg, transparent 75%, hsl(0 0% 100%) 75%),
-          linear-gradient(-45deg, transparent 75%, hsl(0 0% 100%) 75%)
-        `,
-        backgroundSize: '120px 120px',
-        backgroundPosition: '0 0, 0 60px, 60px -60px, -60px 0',
-      }} />
+      {/* =========================================
+          DESKTOP VERSION (Dossier Diplomatique)
+          ========================================= */}
+      <section className="hidden md:flex relative w-full bg-[#0B3D91] min-h-[90vh] items-center overflow-hidden pt-20">
+        {/* Decorative Diagonal Pill Patterns */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.10]">
+          <div className="absolute w-[1000px] h-48 rounded-[100px] bg-white -rotate-[15deg] -top-20 -left-64"></div>
+          <div className="absolute w-[800px] h-48 rounded-[100px] bg-white -rotate-[15deg] top-64 right-10"></div>
+          <div className="absolute w-[1200px] h-48 rounded-[100px] bg-white -rotate-[15deg] -bottom-32 -left-32"></div>
+        </div>
 
-      {/* Soft gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-primary/85 pointer-events-none" />
+        <div className="relative z-10 max-w-[1400px] mx-auto px-12 w-full grid grid-cols-12 gap-16 items-center">
+          
+          {/* Left Zone: The Imposing Title and Text */}
+          <div className="col-span-12 lg:col-span-8 flex flex-col justify-center">
+            <div className="inline-flex items-center mb-10 text-white text-[10px] font-black tracking-[0.2em] uppercase opacity-80">
+              <span className="flex h-2 w-2 bg-[#DE2910] mr-4"></span>
+              Bourses d'Études — Cohorte 2026/2027
+            </div>
+            
+            <h1 className="text-6xl lg:text-7xl xl:text-[80px] font-black uppercase tracking-tighter mb-8 leading-[0.95] text-white">
+              Programme de <br/> Coopération <br/> Académique <br/> RDC-Chine
+            </h1>
+            
+            <div className="w-16 h-1.5 bg-[#DE2910] mb-8"></div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.1 }}
-        className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-6"
-      >
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-gold" />
-        </span>
-        <span className="text-[11px] font-semibold tracking-wide uppercase text-white/90">
-          Cohorte Sept. 2026 — Candidatures ouvertes
-        </span>
-      </motion.div>
+            <p className="text-sm lg:text-base text-white/70 mb-12 max-w-lg font-medium leading-relaxed tracking-wide">
+              L'excellence académique au service des talents congolais. Intégrez les universités chinoises de rang mondial via un accompagnement structuré, sécurisé et exclusif pour le cycle 2026.
+            </p>
+            
+            <div className="flex items-center gap-6">
+              <Button size="lg" onClick={onApply} className="bg-[#DE2910] text-white hover:bg-[#B71C1C] h-14 px-8 rounded-sm text-sm font-black uppercase tracking-widest shadow-lg transition-transform hover:scale-105 border-0">
+                Déposer un dossier
+                <ArrowRight className="ml-3 w-4 h-4 stroke-[2.5]" />
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => {
+                document.getElementById('pourquoi-chine-desktop')?.scrollIntoView({ behavior: 'smooth' });
+              }} className="h-14 px-8 rounded-sm text-sm font-bold uppercase tracking-widest border border-white/30 text-white bg-transparent hover:bg-white/10 transition-colors">
+                Découvrir le programme
+              </Button>
+            </div>
+          </div>
 
-      <motion.h1
-        className="relative text-[1.65rem] leading-[1.2] sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-3xl text-white"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.15 }}
-      >
-        Programme de Coopération Académique{" "}
-        <span className="whitespace-nowrap relative">
-          RDC–Chine
-          <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 120 6" fill="none" preserveAspectRatio="none">
-            <motion.path
-              d="M2 4C20 2 50 2 60 3C70 4 100 2 118 4"
-              stroke="hsl(var(--gold))"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-            />
-          </svg>
-        </span>
-      </motion.h1>
+          {/* Right Zone: The Metadata Cartouche */}
+          <div className="col-span-12 lg:col-span-4 hidden lg:flex flex-col justify-center">
+             <div className="border border-white/20 bg-white/5 backdrop-blur-md p-10 rounded-sm shadow-2xl relative">
+                {/* Official Stamp Corner */}
+                <div className="absolute top-0 right-0 w-16 h-16 border-l border-b border-white/20 flex items-center justify-center bg-white/5">
+                   <div className="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full border border-white/30"></div>
+                   </div>
+                </div>
 
-      <motion.p
-        className="relative mt-5 text-[15px] sm:text-base md:text-lg text-white/70 max-w-md leading-relaxed"
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        Accès structuré aux opportunités de bourses internationales en Chine pour les étudiants congolais
-      </motion.p>
+                <div className="mb-8">
+                  <p className="text-[10px] font-bold text-white/50 tracking-[0.2em] uppercase mb-1">Coordination des Admissions</p>
+                  <p className="text-sm font-black text-white tracking-widest uppercase">PCARC Kinshasa</p>
+                </div>
 
-      <motion.button
-        onClick={onApply}
-        className="relative mt-8 group px-9 py-3.5 bg-white text-primary font-semibold text-[15px] rounded-lg hover:shadow-lg hover:shadow-white/20 transition-all duration-300"
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.45 }}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        Commencer ma candidature
-        <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span>
-      </motion.button>
+                <div className="space-y-6">
+                  {/* Item 1 */}
+                  <div className="border-b border-white/10 pb-4">
+                    <p className="text-[9px] font-bold text-white/50 tracking-[0.2em] uppercase mb-2">Statut Session 2026</p>
+                    <div className="flex items-center">
+                      <span className="flex h-2 w-2 rounded-full bg-[#5BB774] mr-3 animate-pulse shadow-[0_0_8px_#5BB774]"></span>
+                      <p className="text-xs font-black text-white tracking-widest uppercase">Active - Phase 1</p>
+                    </div>
+                  </div>
+                  {/* Item 2 */}
+                  <div className="border-b border-white/10 pb-4">
+                    <p className="text-[9px] font-bold text-white/50 tracking-[0.2em] uppercase mb-2">Places Allouées</p>
+                    <p className="text-xs font-black text-white tracking-widest uppercase">Sélection Stricte</p>
+                  </div>
+                  {/* Item 3 */}
+                  <div className="border-b border-white/10 pb-4">
+                    <p className="text-[9px] font-bold text-white/50 tracking-[0.2em] uppercase mb-2">Prise en charge</p>
+                    <p className="text-xs font-black text-white tracking-widest uppercase">Frais Scolaires & Logement</p>
+                  </div>
+                  {/* Item 4 */}
+                  <div>
+                    <p className="text-[9px] font-bold text-white/50 tracking-[0.2em] uppercase mb-2">Voie d'Admission</p>
+                    <p className="text-xs font-black text-[#5BB774] tracking-widest uppercase">Sélection d'Excellence</p>
+                  </div>
+                </div>
+             </div>
+          </div>
 
-      <motion.p
-        className="relative mt-3 text-[11px] text-white/40"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-      >
-        Places limitées · Processus sélectif · 100% gratuit
-      </motion.p>
-    </section>
+        </div>
+      </section>
+    </>
   );
 };
 
