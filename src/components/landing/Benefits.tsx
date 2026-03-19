@@ -9,7 +9,7 @@ const benefits = [
 ];
 
 const Benefits = () => (
-  <SectionWrapper id="benefits" className="bg-secondary">
+  <SectionWrapper id="avantages" className="bg-secondary">
     <p className="text-sm font-semibold tracking-widest uppercase text-accent mb-2">Avantages</p>
     <h2 className="text-2xl md:text-3xl font-bold mb-10">Ce que le programme vous offre</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

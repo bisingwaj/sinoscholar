@@ -16,7 +16,7 @@ const items = [
 ];
 
 const About = () => (
-  <SectionWrapper id="about">
+  <SectionWrapper id="programme">
     <p className="text-sm font-semibold tracking-widest uppercase text-accent mb-2">À propos</p>
     <h2 className="text-2xl md:text-3xl font-bold mb-10">Un programme d'excellence académique</h2>
     <div className="space-y-8">

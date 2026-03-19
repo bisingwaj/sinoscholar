@@ -10,7 +10,7 @@ const steps = [
 ];
 
 const ProgramStructure = () => (
-  <SectionWrapper id="structure">
+  <SectionWrapper id="processus">
     <p className="text-sm font-semibold tracking-widest uppercase text-accent mb-2">Processus</p>
     <h2 className="text-2xl md:text-3xl font-bold mb-12">Structure du programme</h2>
     <div className="relative">

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import About from "@/components/landing/About";
 import WhyChina from "@/components/landing/WhyChina";
@@ -20,6 +21,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <Navbar onApply={() => setShowForm(true)} />
       <Hero onApply={() => setShowForm(true)} />
       <About />
       <WhyChina />

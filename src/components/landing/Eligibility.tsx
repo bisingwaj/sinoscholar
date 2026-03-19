@@ -9,7 +9,7 @@ const criteria = [
 ];
 
 const Eligibility = () => (
-  <SectionWrapper id="eligibility">
+  <SectionWrapper id="eligibilite">
     <p className="text-sm font-semibold tracking-widest uppercase text-accent mb-2">Critères</p>
     <h2 className="text-2xl md:text-3xl font-bold mb-10">Conditions d'éligibilité</h2>
     <div className="space-y-5">
