@@ -26,7 +26,7 @@ const initialData: FormData = {
   objectif: "", projet: "", passeport: "", carteVaccination: "", dejaCandidate: "",
 };
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 const stepMeta = [
   { icon: User, title: "Identité", subtitle: "Parlez-nous de vous" },
@@ -34,6 +34,7 @@ const stepMeta = [
   { icon: GraduationCap, title: "Parcours", subtitle: "Votre profil académique" },
   { icon: Phone, title: "Contact", subtitle: "Comment vous joindre" },
   { icon: Target, title: "Objectif", subtitle: "Votre projet d'études" },
+  { icon: Shield, title: "Documents", subtitle: "Vos documents de voyage" },
   { icon: HelpCircle, title: "Dernière étape", subtitle: "Presque terminé !" },
 ];
 
