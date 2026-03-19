@@ -45,7 +45,10 @@ const Navbar = ({ onApply }: NavbarProps) => {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5 shrink-0">
             <img src={embleme} alt="PCARC" className="w-8 h-8" />
-            <span className="text-sm font-bold text-primary hidden sm:inline">PCARC</span>
+            <div className="flex flex-col leading-none">
+              <span className="text-[11px] font-bold text-primary tracking-wide">PCARC</span>
+              <span className="text-[9px] text-muted-foreground font-medium hidden xs:block">Coopération Académique RDC–Chine</span>
+            </div>
           </a>
 
           {/* Desktop links */}

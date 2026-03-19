@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, ChevronDown, User, MapPin, GraduationCap, Phone, Target, HelpCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, User, MapPin, GraduationCap, Phone, Target, Shield, HelpCircle } from "lucide-react";
 import { provinces, objectifsAcademiques } from "@/data/rdc-geo";
 
 interface FormData {
@@ -15,16 +15,18 @@ interface FormData {
   whatsapp: string;
   objectif: string;
   projet: string;
+  passeport: string;
+  carteVaccination: string;
   dejaCandidate: string;
 }
 
 const initialData: FormData = {
   nom: "", age: "", province: "", ville: "", sexe: "",
   niveauEtude: "", domaineEtude: "", email: "", whatsapp: "",
-  objectif: "", projet: "", dejaCandidate: "",
+  objectif: "", projet: "", passeport: "", carteVaccination: "", dejaCandidate: "",
 };
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 const stepMeta = [
   { icon: User, title: "Identité", subtitle: "Parlez-nous de vous" },
@@ -32,6 +34,7 @@ const stepMeta = [
   { icon: GraduationCap, title: "Parcours", subtitle: "Votre profil académique" },
   { icon: Phone, title: "Contact", subtitle: "Comment vous joindre" },
   { icon: Target, title: "Objectif", subtitle: "Votre projet d'études" },
+  { icon: Shield, title: "Documents", subtitle: "Vos documents de voyage" },
   { icon: HelpCircle, title: "Dernière étape", subtitle: "Presque terminé !" },
 ];
 
@@ -40,11 +43,17 @@ interface ApplicationFormProps {
 }
 
 const DRCFlag = () => (
-  <svg width="20" height="14" viewBox="0 0 20 14" className="rounded-sm shrink-0">
-    <rect width="20" height="14" fill="#007FFF" />
-    <line x1="0" y1="0" x2="20" y2="14" stroke="#CE1021" strokeWidth="2.5" />
-    <line x1="0" y1="14" x2="20" y2="0" stroke="#CE1021" strokeWidth="2.5" />
-    <rect x="1" y="1" width="4" height="3" fill="#F7D618" />
+  <svg width="24" height="16" viewBox="0 0 900 600" className="rounded-[3px] shrink-0 border border-border/30">
+    <rect width="900" height="600" fill="#007FFF" />
+    <g>
+      <line x1="0" y1="0" x2="900" y2="600" stroke="#CE1021" strokeWidth="60" />
+      <line x1="0" y1="0" x2="900" y2="600" stroke="#F7D618" strokeWidth="30" />
+      <line x1="900" y1="0" x2="0" y2="600" stroke="#CE1021" strokeWidth="60" />
+      <line x1="900" y1="0" x2="0" y2="600" stroke="#F7D618" strokeWidth="30" />
+    </g>
+    <g transform="translate(100,32)">
+      <polygon points="45,0 58,30 90,35 65,55 72,90 45,72 18,90 25,55 0,35 32,30" fill="#F7D618" />
+    </g>
   </svg>
 );
 
@@ -270,6 +279,8 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
                   <SelectWrapper>
                     <select className={selectClass} value={data.niveauEtude} onChange={(e) => update("niveauEtude", e.target.value)}>
                       <option value="">Sélectionnez</option>
+                      <option value="Diplôme d'État">Diplôme d'État (D6, obtenu ou en cours)</option>
+                      <option value="Graduat">Graduat (Bac+3, en cours ou obtenu)</option>
                       <option value="Licence">Licence (en cours ou obtenue)</option>
                       <option value="Master">Master (en cours ou obtenu)</option>
                       <option value="Doctorat">Doctorat</option>
@@ -335,6 +346,24 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
             )}
 
             {step === 6 && (
+              <>
+                <div>
+                  <label className={labelClass}>Avez-vous un passeport valide ?</label>
+                  <ToggleGroup options={["Oui", "Non"]} value={data.passeport} field="passeport" />
+                </div>
+                <div>
+                  <label className={labelClass}>Avez-vous une carte jaune (vaccination) ?</label>
+                  <ToggleGroup options={["Oui", "Non"]} value={data.carteVaccination} field="carteVaccination" />
+                </div>
+                <div className="p-3 rounded-lg bg-secondary/50 border border-border">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Ces documents ne sont pas obligatoires pour postuler, mais ils seront nécessaires pour la suite du processus.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {step === 7 && (
               <>
                 <div>
                   <label className={labelClass}>Avez-vous déjà candidaté à une bourse ?</label>

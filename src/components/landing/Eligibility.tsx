@@ -2,7 +2,7 @@ import SectionWrapper from "./SectionWrapper";
 import { GraduationCap, Flame, FolderCheck, ArrowRightCircle } from "lucide-react";
 
 const criteria = [
-  { icon: GraduationCap, text: "Niveau académique suffisant (Licence minimum ou en cours)" },
+  { icon: GraduationCap, text: "Diplôme d'État obtenu (ou niveau supérieur : Graduat, Licence, Master, Doctorat)" },
   { icon: Flame, text: "Motivation clairement exprimée et projet défini" },
   { icon: FolderCheck, text: "Sérieux du projet académique et professionnel" },
   { icon: ArrowRightCircle, text: "Engagement actif dans le processus de candidature" },
