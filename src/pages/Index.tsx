@@ -1,16 +1,37 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Hero from "@/components/landing/Hero";
+import About from "@/components/landing/About";
+import WhyChina from "@/components/landing/WhyChina";
+import ProgramStructure from "@/components/landing/ProgramStructure";
+import Benefits from "@/components/landing/Benefits";
+import Eligibility from "@/components/landing/Eligibility";
+import CTASection from "@/components/landing/CTASection";
+import Trust from "@/components/landing/Trust";
+import Contact from "@/components/landing/Contact";
+import Footer from "@/components/landing/Footer";
+import ApplicationForm from "@/components/landing/ApplicationForm";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [showForm, setShowForm] = useState(false);
+
+  if (showForm) {
+    return <ApplicationForm onClose={() => setShowForm(false)} />;
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen">
+      <Hero onApply={() => setShowForm(true)} />
+      <About />
+      <WhyChina />
+      <ProgramStructure />
+      <Benefits />
+      <Eligibility />
+      <CTASection onApply={() => setShowForm(true)} />
+      <Trust />
+      <Contact />
+      <Footer />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
