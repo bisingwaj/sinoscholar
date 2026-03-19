@@ -7,15 +7,32 @@ interface HeroProps {
 
 const Hero = ({ onApply }: HeroProps) => {
   return (
-    <section className="relative min-h-[85vh] flex flex-col items-center justify-center px-6 pt-24 pb-16 text-center overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--primary)) 1px, transparent 0)`,
-        backgroundSize: '40px 40px',
+    <section className="relative min-h-[85vh] flex flex-col items-center justify-center px-6 pt-24 pb-16 text-center overflow-hidden bg-primary">
+      {/* Diagonal lines pattern */}
+      <div className="absolute inset-0 opacity-[0.07]" style={{
+        backgroundImage: `repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 30px,
+          hsl(0 0% 100%) 30px,
+          hsl(0 0% 100%) 31px
+        )`,
       }} />
-      
-      {/* Gradient accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+
+      {/* Large geometric diamond shapes */}
+      <div className="absolute inset-0 opacity-[0.04]" style={{
+        backgroundImage: `
+          linear-gradient(45deg, hsl(0 0% 100%) 25%, transparent 25%),
+          linear-gradient(-45deg, hsl(0 0% 100%) 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, hsl(0 0% 100%) 75%),
+          linear-gradient(-45deg, transparent 75%, hsl(0 0% 100%) 75%)
+        `,
+        backgroundSize: '120px 120px',
+        backgroundPosition: '0 0, 0 60px, 60px -60px, -60px 0',
+      }} />
+
+      {/* Soft gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-primary/85 pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0 }}
