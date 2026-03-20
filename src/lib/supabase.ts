@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-anon-key';
 
-if (!supabaseUrl || supabaseUrl === 'VOTRE_URL_SUPABASE') {
+if (supabaseUrl === 'https://placeholder.supabase.co' || supabaseUrl === 'VOTRE_URL_SUPABASE') {
   console.warn('⚠️ Supabase URL non configurée. Ajoutez VITE_SUPABASE_URL dans .env.local');
 }
 
