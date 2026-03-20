@@ -65,6 +65,7 @@ const App = () => {
       </AdminProvider>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;
