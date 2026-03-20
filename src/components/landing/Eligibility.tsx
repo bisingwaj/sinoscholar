@@ -18,7 +18,7 @@ const Eligibility = () => (
         <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#5BB774] mb-8">
           CRITÈRES ACADÉMIQUES
         </p>
-        <h2 className="text-[52px] sm:text-[64px] font-black uppercase tracking-tighter leading-[0.9] mb-16 text-white break-words">
+        <h2 className="text-[40px] md:text-[52px] lg:text-[64px] font-black uppercase tracking-tighter leading-[0.9] mb-16 text-white break-normal">
           SÉLECTION<br/><span className="text-white/60">RIGOUREUSE.</span>
         </h2>
         <div className="flex flex-col border-t border-white/20">

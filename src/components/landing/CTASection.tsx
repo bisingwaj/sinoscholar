@@ -17,7 +17,7 @@ const CTASection = ({ onApply }: CTASectionProps) => {
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DE2910] mb-8">
             SESSION DE BOURSES 2026/2027
           </p>
-          <h2 className="text-[52px] sm:text-[64px] font-black uppercase tracking-tighter leading-[0.9] mb-16 text-[#0B3D91] break-words">
+          <h2 className="text-[40px] md:text-[52px] lg:text-[64px] font-black uppercase tracking-tighter leading-[0.9] mb-16 text-[#0B3D91] break-normal">
             CANDIDA-<br/>TURES<br/><span className="text-[#0B3D91] opacity-60">OUVERTES.</span>
           </h2>
           <p className="text-[15px] sm:text-base text-[#0B3D91]/80 leading-relaxed font-medium mb-12 border-l-2 border-[#DE2910] pl-6">

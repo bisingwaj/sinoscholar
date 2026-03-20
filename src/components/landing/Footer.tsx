@@ -12,7 +12,7 @@ const Footer = () => (
         <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#5BB774] mb-8">
           ASSISTANCE & SUPPORT
         </p>
-        <h2 className="text-[52px] sm:text-[64px] font-black uppercase tracking-tighter leading-[0.9] mb-16 break-words">
+        <h2 className="text-[40px] md:text-[52px] lg:text-[64px] font-black uppercase tracking-tighter leading-[0.9] mb-16 break-normal">
           NOUS<br/><span className="text-white/60">CONTACTER.</span>
         </h2>
         

@@ -18,7 +18,7 @@ const Hero = ({ onApply }: HeroProps) => {
             <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#DE2910] mb-8">
               Candidature Bourses d'Études - Cohorte 2026
             </p>
-            <h1 className="text-[38px] sm:text-[48px] font-black uppercase tracking-tighter leading-[1.0] mb-12 text-[#0B3D91]">
+            <h1 className="text-[32px] sm:text-[42px] md:text-[48px] font-black uppercase tracking-tighter leading-[1.0] mb-12 text-[#0B3D91] break-normal">
               PROGRAMME DE<br/>COOPÉRATION<br/>ACADÉMIQUE<br/><span className="text-[#0B3D91] opacity-60">SINO-CONGOLAISE.</span>
             </h1>
             <p className="text-[15px] sm:text-base text-[#0B3D91] leading-relaxed font-medium pl-6 border-l-2 border-[#DE2910] max-w-sm mb-16 opacity-90">

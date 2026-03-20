@@ -84,7 +84,7 @@ const SubmissionGrid = ({ data, onClose, submitState }: { data: FormData, onClos
                initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0, 1] }} transition={{ duration: 0.6, repeat: Infinity, repeatType: "mirror", ease: "linear" }}
                className="hidden md:flex col-span-8 row-span-4 border-r-4 border-b-4 border-[#0B3D91] bg-white flex-col justify-between p-12">
                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#0B3D91]">Traitement des métadonnées protocolaires</p>
-               <h2 className="text-8xl xl:text-[120px] font-black text-[#0B3D91] uppercase tracking-tighter leading-[0.85] break-words">ENCODAGE<br/>EN COURS...</h2>
+               <h2 className="text-8xl xl:text-[120px] font-black text-[#0B3D91] uppercase tracking-tighter leading-[0.85] break-normal">ENCODAGE<br/>EN COURS...</h2>
             </motion.div>
             
             <div className="md:col-span-4 md:row-span-4 border-b-4 border-[#0B3D91] bg-[#0B3D91] text-white flex flex-col justify-end p-8 md:p-12 relative overflow-hidden">
@@ -120,7 +120,7 @@ const SubmissionGrid = ({ data, onClose, submitState }: { data: FormData, onClos
                   <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#5BB774]">PROCÉDURE D'ENREGISTREMENT COMPLÉTÉE</p>
                </div>
                <div>
-                 <h2 className="text-[52px] md:text-[100px] xl:text-[130px] font-black text-white uppercase tracking-tighter leading-[0.85] break-words mb-6 md:mb-8 mt-12 md:mt-0">CANDIDATURE<br/><span className="text-[#5BB774]">SOUMISE.</span></h2>
+                 <h2 className="text-[52px] md:text-[100px] xl:text-[130px] font-black text-white uppercase tracking-tighter leading-[0.85] break-normal mb-6 md:mb-8 mt-12 md:mt-0">CANDIDATURE<br/><span className="text-[#5BB774]">SOUMISE.</span></h2>
                  <p className="text-lg md:text-2xl text-white max-w-3xl font-medium leading-relaxed opacity-90 border-l-4 border-[#5BB774] pl-6">
                    Votre dossier a été formellement réceptionné par l'administration du programme. L'évaluation de conformité est en cours. Vous serez notifié des suites données à votre candidature.
                  </p>
@@ -264,12 +264,67 @@ const ToggleGroup = ({ options, value, onChange }: { options: string[]; value: s
   </div>
 );
 
+type FieldKey = keyof FormData;
+
+
+const desktopSteps: FieldKey[][] = [
+  ['nom', 'age', 'sexe'],
+  ['province', 'ville'],
+  ['niveauEtude', 'domaineEtude'],
+  ['email', 'whatsapp'],
+  ['objectif', 'projet'],
+  ['passeport', 'carteVaccination'],
+  ['dejaCandidate']
+];
+
+const mobileSteps: FieldKey[][] = [
+  ['nom'],
+  ['age', 'sexe'],
+  ['province', 'ville'],
+  ['niveauEtude'],
+  ['domaineEtude'],
+  ['email', 'whatsapp'],
+  ['objectif'],
+  ['projet'],
+  ['passeport', 'carteVaccination'],
+  ['dejaCandidate']
+];
+
+const mobileMeta = [
+  { title: "Identité" },
+  { title: "Profil" },
+  { title: "Localisation" },
+  { title: "Grade Académique" },
+  { title: "Spécialité" },
+  { title: "Contact" },
+  { title: "Objectif" },
+  { title: "Projet" },
+  { title: "Documents" },
+  { title: "Validation" },
+];
 
 const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
+  const [isMobile, setIsMobile] = useState(false);
   const [step, setStep] = useState(1);
   const [data, setData] = useState<FormData>(initialData);
   const [submitState, setSubmitState] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [direction, setDirection] = useState(1);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const currentStructure = isMobile ? mobileSteps : desktopSteps;
+  const currentMeta = isMobile ? mobileMeta : stepMeta;
+  const TOTAL_STEPS = currentStructure.length;
+
+  // Auto-correct out of bounds step if resize happens
+  useEffect(() => {
+    if (step > TOTAL_STEPS) setStep(TOTAL_STEPS);
+  }, [TOTAL_STEPS, step]);
 
   const update = (field: keyof FormData, value: string) =>
     setData((prev) => ({ ...prev, [field]: value }));
@@ -280,16 +335,11 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
   }, [data.province]);
 
   const validateStep = (currentStep: number) => {
-    switch (currentStep) {
-      case 1: return data.nom.trim() !== "" && data.age !== "" && data.sexe !== "";
-      case 2: return data.province !== "" && data.ville !== "";
-      case 3: return data.niveauEtude !== "" && data.domaineEtude.trim() !== "";
-      case 4: return data.email.trim() !== "" && data.whatsapp.trim() !== "";
-      case 5: return data.objectif !== "" && data.projet.trim() !== "";
-      case 6: return data.passeport !== "" && data.carteVaccination !== "";
-      case 7: return data.dejaCandidate !== "";
-      default: return true;
-    }
+    const fields = currentStructure[currentStep - 1] || [];
+    return fields.every(field => {
+      if (field === 'ville' && data.province === '') return false; // Edge case
+      return data[field].trim() !== "";
+    });
   };
 
   const next = async () => {
@@ -340,24 +390,129 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
   };
 
   const variants = {
-    enter: (dir: number) => ({ y: dir > 0 ? 40 : -40, opacity: 0 }),
+    enter: (dir: number) => ({ y: dir > 0 ? 30 : -30, opacity: 0 }),
     center: { y: 0, opacity: 1 },
-    exit: (dir: number) => ({ y: dir > 0 ? -40 : 40, opacity: 0 }),
+    exit: (dir: number) => ({ y: dir > 0 ? -30 : 30, opacity: 0 }),
   };
 
-  const labelClass = "block text-[10px] font-black uppercase tracking-[0.2em] text-[#0B3D91]/60 mb-6";
-  const inputClass = "w-full bg-transparent border-b-2 border-gray-200 pb-4 text-2xl md:text-3xl font-light text-[#0B3D91] placeholder:text-gray-300 focus:outline-none focus:border-[#059669] transition-colors rounded-none";
-  const textareaClass = "w-full bg-transparent border-2 border-gray-200 p-6 text-xl md:text-2xl font-light text-[#0B3D91] placeholder:text-gray-300 focus:outline-none focus:border-[#059669] transition-colors rounded-none min-h-[240px] resize-none leading-relaxed";
+  const labelClass = "block text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-[#0B3D91]/60 mb-4 md:mb-6";
+  const textareaClass = "w-full bg-transparent border-2 border-gray-200 p-4 md:p-6 text-xl md:text-2xl font-light text-[#0B3D91] placeholder:text-gray-300 focus:outline-none focus:border-[#059669] transition-colors rounded-none min-h-[160px] md:min-h-[240px] resize-none leading-relaxed";
+
+  const renderField = (field: FieldKey) => {
+    switch (field) {
+      case 'nom': return (
+        <div key="nom">
+          <label className={labelClass}>Nom complet (Filiation légale)</label>
+          <DynamicInput value={data.nom} onChange={(e: any) => update("nom", e.target.value.toUpperCase())} placeholder="Ex: Jean-Mutombo" />
+        </div>
+      );
+      case 'age': return (
+        <div key="age">
+          <label className={labelClass}>Âge officiel</label>
+          <DynamicInput type="number" value={data.age} onChange={(e: any) => update("age", e.target.value)} placeholder="Ex: 24" min="15" max="60" />
+        </div>
+      );
+      case 'sexe': return (
+        <div key="sexe">
+          <label className={labelClass}>Identité de genre</label>
+          <ToggleGroup options={["Homme", "Femme"]} value={data.sexe} onChange={(v) => update("sexe", v)} />
+        </div>
+      );
+      case 'province': return (
+        <div key="province">
+          <label className={labelClass}>Province de résidence</label>
+          <CustomSelect value={data.province} options={provinces.map(p => p.name)} onChange={(v) => { update("province", v); update("ville", ""); }} placeholder="Province" />
+        </div>
+      );
+      case 'ville': return (
+        <div key="ville" className={`transition-opacity duration-300 ${!data.province ? 'opacity-30 pointer-events-none hidden md:block' : 'opacity-100'}`}>
+          <label className={labelClass}>Ville de résidence</label>
+          <CustomSelect value={data.ville} options={cities} onChange={(v) => update("ville", v)} placeholder="Ville principale" />
+        </div>
+      );
+      case 'niveauEtude': return (
+        <div key="niveauEtude">
+          <label className={labelClass}>Plus haut niveau d'étude validé</label>
+          <CustomSelect value={data.niveauEtude} options={["Diplôme d'État", "Graduat", "Licence LMD", "Master", "Doctorat"]} onChange={(v) => update("niveauEtude", v)} placeholder="Grade académique" />
+        </div>
+      );
+      case 'domaineEtude': return (
+        <div key="domaineEtude">
+          <label className={labelClass}>Domaine / Filière d'expertise</label>
+          <DynamicInput value={data.domaineEtude} onChange={(e: any) => update("domaineEtude", e.target.value)} placeholder="Ex: Informatique..." />
+        </div>
+      );
+      case 'email': return (
+        <div key="email">
+          <label className={labelClass}>Adresse courriel officielle</label>
+          <DynamicInput type="email" value={data.email} onChange={(e: any) => update("email", e.target.value)} placeholder="étudiant@faculte.cd" />
+        </div>
+      );
+      case 'whatsapp': return (
+        <div key="whatsapp">
+          <label className={labelClass}>Numéro de contact (WhatsApp)</label>
+          <div className="flex items-end gap-4 md:gap-6 overflow-hidden">
+            <div className="flex items-center gap-2 pb-4 border-b-2 border-[#0B3D91] shrink-0">
+              <DRCFlag />
+              <span className="text-xl md:text-3xl font-light text-[#0B3D91]">+243</span>
+            </div>
+            <DynamicInput type="tel" value={data.whatsapp} onChange={(e: any) => update("whatsapp", e.target.value)} placeholder="8XX XXX XXX" />
+          </div>
+        </div>
+      );
+      case 'objectif': return (
+        <div key="objectif">
+          <label className={labelClass}>Finalité de la mission</label>
+          <CustomSelect value={data.objectif} options={objectifsAcademiques} onChange={(v) => update("objectif", v)} placeholder="Objectif académique" />
+        </div>
+      );
+      case 'projet': return (
+        <div key="projet" className="h-full flex flex-col">
+          <label className={labelClass}>Note d'intention conceptuelle</label>
+          <textarea className={textareaClass} value={data.projet} onChange={(e) => update("projet", e.target.value)} placeholder="Décrivez votre projet avec rigueur..." />
+        </div>
+      );
+      case 'passeport': return (
+        <div key="passeport">
+          <label className={labelClass}>Titre de voyage (Passeport) valide</label>
+          <ToggleGroup options={["Oui", "Non"]} value={data.passeport} onChange={(v) => update("passeport", v)} />
+        </div>
+      );
+      case 'carteVaccination': return (
+        <div key="carteVaccination">
+          <label className={labelClass}>Certificat de Vaccination International</label>
+          <ToggleGroup options={["Oui", "Non"]} value={data.carteVaccination} onChange={(v) => update("carteVaccination", v)} />
+          <div className="mt-6 md:mt-8 border-l-4 border-[#0B3D91] pl-6 py-2">
+            <p className="text-xs md:text-sm text-gray-400 leading-relaxed font-bold">
+              Obligation documentaire à remplir ultérieurement en cas de sélection.
+            </p>
+          </div>
+        </div>
+      );
+      case 'dejaCandidate': return (
+        <div key="dejaCandidate">
+          <label className={labelClass}>Antécédent de candidature bilatérale</label>
+          <ToggleGroup options={["Nouvelle candidature", "Renouvellement"]} value={data.dejaCandidate} onChange={(v) => update("dejaCandidate", v)} />
+          <div className="mt-8 md:mt-12 bg-[#F8F9FA] p-6 md:p-8 border-l-4 border-[#059669]">
+            <p className="text-xs md:text-sm text-[#0B3D91] leading-relaxed font-black">
+              Je certifie sur l'honneur l'exactitude des informations administratives saisies dans le présent formulaire d'admission.
+            </p>
+          </div>
+        </div>
+      );
+      default: return null;
+    }
+  }
 
   if (submitState !== 'idle') {
     return <SubmissionGrid data={data} onClose={onClose} submitState={submitState} />;
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-white flex flex-col md:flex-row font-sans overflow-hidden">
+    <div className="fixed inset-0 z-[100] bg-white flex flex-col lg:flex-row font-sans overflow-hidden">
       
-      {/* Left Panel: Vertical Index (Consular Style) */}
-      <div className="hidden md:flex flex-col w-[320px] lg:w-[420px] bg-[#F8F9FA] border-r border-gray-200 p-12 shrink-0">
+      {/* Left Panel: Vertical Index (Consular Style - Desktop Only) */}
+      <div className="hidden lg:flex flex-col w-[320px] xl:w-[420px] bg-[#F8F9FA] border-r border-gray-200 p-12 shrink-0">
         <div className="mb-20">
           <div className="w-12 h-1 bg-[#059669] mb-6"></div>
           <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#0B3D91]">PCARC — Admission Officielle</h2>
@@ -366,8 +521,8 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
         
         <div className="flex-1 flex flex-col justify-center space-y-10">
            {stepMeta.map((meta, i) => {
-             const isActive = step === i + 1;
-             const isPast = step > i + 1;
+             const isActive = !isMobile && step === i + 1;
+             const isPast = !isMobile && step > i + 1;
              return (
                <div key={i} className={`flex items-center gap-6 transition-all duration-500 ${isActive ? 'opacity-100 translate-x-3' : isPast ? 'opacity-40' : 'opacity-20'}`}>
                   <span className={`text-sm font-black ${isActive ? 'text-[#059669]' : 'text-[#0B3D91]'}`}>
@@ -391,25 +546,25 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
       </div>
 
       {/* Top Bar for Mobile */}
-      <div className="md:hidden flex items-center justify-between p-5 border-b border-gray-100 bg-[#F8F9FA]">
-          <button onClick={onClose} className="p-3 text-gray-400 hover:text-[#059669]"><X className="w-6 h-6" /></button>
-          <div className="flex gap-1.5 pr-2">
-            {Array.from({length: 7}).map((_, i) => (
-              <div key={i} className={`h-1 transition-all ${i+1===step ? 'w-8 bg-[#059669]' : i+1<step ? 'w-2 bg-[#0B3D91]' : 'w-2 bg-gray-200'}`} />
-            ))}
+      <div className="lg:hidden flex flex-col bg-[#F8F9FA] border-b border-gray-100">
+          <div className="flex items-center justify-between p-3 md:p-5">
+            <button onClick={onClose} className="p-3 text-gray-400 hover:text-[#059669]"><X className="w-6 h-6" /></button>
+            <div className="flex gap-1 pr-4 max-w-[60%] overflow-hidden">
+              {Array.from({length: TOTAL_STEPS}).map((_, i) => (
+                <div key={i} className={`h-1 transition-all rounded-full ${i+1===step ? 'w-6 bg-[#059669]' : i+1<step ? 'w-2 bg-[#0B3D91]' : 'w-2 bg-gray-200'}`} />
+              ))}
+            </div>
           </div>
       </div>
 
       {/* Right Panel: The Form Area */}
-      <div className="flex-1 flex flex-col bg-white relative overflow-hidden">
-          
+      <div className="flex-1 flex flex-col bg-white overflow-hidden supports-[height:100dvh]:h-[calc(100dvh-70px)]">
           <div className="flex-1 overflow-y-auto w-full flex flex-col">
-            <div className="flex-1 flex flex-col justify-center px-8 md:px-20 lg:px-32 py-12">
+            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 lg:px-32 py-6 md:py-12">
                 
                 {/* Mobile Header indicator */}
-                <div className="md:hidden mb-12 border-l-4 border-[#059669] pl-5 mt-4">
-                   <span className="text-gray-400 font-black text-sm tracking-widest leading-none block">0{step}.</span>
-                   <h2 className="text-[40px] font-black text-[#0B3D91] uppercase tracking-tighter mt-2 leading-[0.9] break-words">{stepMeta[step-1].title}</h2>
+                <div className="lg:hidden mb-8 border-l-4 border-[#059669] pl-4 mt-2">
+                   <h2 className="text-[32px] md:text-[40px] font-black text-[#0B3D91] uppercase tracking-tighter mt-1 leading-[0.9] break-normal">{currentMeta[step-1]?.title || "Candidature"}</h2>
                 </div>
 
                 <AnimatePresence mode="wait" custom={direction}>
@@ -420,174 +575,38 @@ const ApplicationForm = ({ onClose }: ApplicationFormProps) => {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className="w-full max-w-2xl space-y-16"
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full max-w-2xl flex flex-col space-y-8 md:space-y-16"
                   >
-                    {step === 1 && (
-                      <>
-                        <div>
-                          <label className={labelClass}>Nom complet (Filiation légale)</label>
-                          <DynamicInput value={data.nom} onChange={(e: any) => update("nom", e.target.value.toUpperCase())} placeholder="Ex: Jean-Pierre Mutombo" />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Âge officiel</label>
-                          <DynamicInput type="number" value={data.age} onChange={(e: any) => update("age", e.target.value)} placeholder="Ex: 24" min="15" max="60" />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Identité de genre</label>
-                          <ToggleGroup options={["Homme", "Femme"]} value={data.sexe} onChange={(v) => update("sexe", v)} />
-                        </div>
-                      </>
-                    )}
-
-                    {step === 2 && (
-                      <>
-                        <div>
-                          <label className={labelClass}>Province de résidence</label>
-                          <CustomSelect
-                            value={data.province}
-                            options={provinces.map(p => p.name)}
-                            onChange={(v) => { update("province", v); update("ville", ""); }}
-                            placeholder="Sélectionner la province"
-                          />
-                        </div>
-                        <div className={`transition-opacity duration-300 ${!data.province ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
-                          <label className={labelClass}>Ville de résidence</label>
-                          <CustomSelect
-                            value={data.ville}
-                            options={cities}
-                            onChange={(v) => update("ville", v)}
-                            placeholder="Sélectionner la ville principale"
-                          />
-                        </div>
-                      </>
-                    )}
-
-                    {step === 3 && (
-                      <>
-                        <div>
-                          <label className={labelClass}>Plus haut niveau d'étude validé</label>
-                          <CustomSelect
-                            value={data.niveauEtude}
-                            options={["Diplôme d'État", "Graduat (Bac+3)", "Licence LMD", "Master", "Doctorat"]}
-                            onChange={(v) => update("niveauEtude", v)}
-                            placeholder="Sélectionner le grade académique"
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Domaine / Filière d'expertise</label>
-                          <DynamicInput value={data.domaineEtude} onChange={(e: any) => update("domaineEtude", e.target.value)} placeholder="Ex: Informatique, Droit public..." />
-                        </div>
-                      </>
-                    )}
-
-                    {step === 4 && (
-                      <>
-                        <div>
-                          <label className={labelClass}>Adresse courriel officielle</label>
-                          <DynamicInput type="email" value={data.email} onChange={(e: any) => update("email", e.target.value)} placeholder="candidat@institution.cd" />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Numéro de contact (WhatsApp)</label>
-                          <div className="flex items-end gap-6 overflow-hidden">
-                            <div className="flex items-center gap-3 pb-4 border-b-2 border-[#0B3D91] shrink-0">
-                              <DRCFlag />
-                              <span className="text-2xl md:text-3xl font-light text-[#0B3D91]">+243</span>
-                            </div>
-                            <DynamicInput
-                              type="tel"
-                              value={data.whatsapp}
-                              onChange={(e: any) => update("whatsapp", e.target.value)}
-                              placeholder="8XX XXX XXX"
-                            />
-                          </div>
-                        </div>
-                      </>
-                    )}
-
-                    {step === 5 && (
-                      <>
-                        <div>
-                          <label className={labelClass}>Finalité de la mission</label>
-                          <CustomSelect
-                            value={data.objectif}
-                            options={objectifsAcademiques}
-                            onChange={(v) => update("objectif", v)}
-                            placeholder="Définir l'objectif académique"
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Note d'intention conceptuelle</label>
-                          <textarea
-                            className={textareaClass}
-                            value={data.projet}
-                            onChange={(e) => update("projet", e.target.value)}
-                            placeholder="Décrivez votre projet avec rigueur et précision..."
-                          />
-                        </div>
-                      </>
-                    )}
-
-                    {step === 6 && (
-                      <>
-                        <div>
-                          <label className={labelClass}>Titre de voyage (Passeport) en cours de validité</label>
-                          <ToggleGroup options={["Oui", "Non"]} value={data.passeport} onChange={(v) => update("passeport", v)} />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Certificat International de Vaccination (Fièvre jaune)</label>
-                          <ToggleGroup options={["Oui", "Non"]} value={data.carteVaccination} onChange={(v) => update("carteVaccination", v)} />
-                        </div>
-                        <div className="mt-8 border-l-4 border-[#0B3D91] pl-6 py-2">
-                          <p className="text-sm text-gray-400 leading-relaxed font-bold">
-                            Obligation documentaire à remplir ultérieurement en cas de sélection.
-                          </p>
-                        </div>
-                      </>
-                    )}
-
-                    {step === 7 && (
-                      <>
-                        <div>
-                          <label className={labelClass}>Antécédent de candidature au programme bilatéral</label>
-                          <ToggleGroup options={["Nouvelle candidature", "Renouvellement"]} value={data.dejaCandidate} onChange={(v) => update("dejaCandidate", v)} />
-                        </div>
-                        <div className="mt-12 bg-[#F8F9FA] p-8 border-l-4 border-[#059669]">
-                          <p className="text-sm text-[#0B3D91] leading-relaxed font-black">
-                            Je certifie sur l'honneur l'exactitude des informations administratives saisies dans le présent formulaire d'admission.
-                          </p>
-                        </div>
-                      </>
-                    )}
+                    {currentStructure[step-1]?.map(field => renderField(field))}
                   </motion.div>
                 </AnimatePresence>
             </div>
           </div>
 
           {/* Navigation Footer (Strict Geometry) */}
-          <div className="px-0 md:px-20 lg:px-32 py-0 md:py-10 bg-white border-t border-gray-200 shrink-0 flex items-center justify-between md:justify-between w-full mt-auto sticky bottom-0 z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] md:shadow-none">
-              <button onClick={prev} className={`hidden md:flex items-center gap-4 text-[11px] uppercase font-black tracking-[0.2em] transition-all ${step===1 ? 'opacity-0 pointer-events-none' : 'text-gray-400 hover:text-[#0B3D91]'}`}>
+          <div className="px-0 md:px-20 lg:px-32 py-0 md:py-8 bg-white border-t border-gray-200 shrink-0 flex items-center justify-between w-full mt-auto">
+              <button onClick={prev} className={`hidden lg:flex items-center gap-4 text-[11px] uppercase font-black tracking-[0.2em] transition-all ${step===1 ? 'opacity-0 pointer-events-none' : 'text-gray-400 hover:text-[#0B3D91]'}`}>
                 <ArrowLeft className="w-5 h-5" /> Précédent
               </button>
               
-              <div className="flex w-full md:w-auto">
-                <button onClick={prev} className={`md:hidden shrink-0 bg-gray-100 flex items-center justify-center w-[72px] transition-all ${step===1 ? 'opacity-0 pointer-events-none w-0' : 'text-gray-600 hover:bg-gray-200'}`}>
-                  <ArrowLeft className="w-6 h-6" />
+              <div className="flex w-full lg:w-auto">
+                <button onClick={prev} className={`lg:hidden shrink-0 bg-gray-50 flex items-center justify-center w-[72px] md:w-[90px] transition-all border-r border-gray-200 ${step===1 ? 'opacity-0 pointer-events-none w-0 border-0' : 'text-gray-600 hover:bg-gray-200'}`}>
+                  <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
                 <button 
                   onClick={next} 
                   disabled={!validateStep(step)}
-                  className={`w-full md:w-auto flex items-center justify-center gap-6 px-6 md:px-14 py-8 md:py-6 text-[11px] md:text-[13px] font-black uppercase tracking-[0.25em] transition-all rounded-none shadow-none md:shadow-2xl group focus:outline-none ${!validateStep(step) ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-[#0B3D91] text-white hover:bg-[#059669]'}`}
+                  className={`flex-1 lg:flex-none flex items-center justify-center gap-4 md:gap-6 px-6 md:px-14 py-6 md:py-6 text-[11px] md:text-[13px] font-black uppercase tracking-[0.2em] md:tracking-[0.25em] transition-all rounded-none shadow-none md:shadow-2xl group focus:outline-none ${!validateStep(step) ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-[#0B3D91] text-white hover:bg-[#059669]'}`}
                 >
                   {step === TOTAL_STEPS ? (
-                    "TRANSMETTRE LE DOSSIER"
+                    "TRANSMETTRE DOSSIER"
                   ) : (
-                    <>CONTINUER <ArrowRight className={`w-5 h-5 transition-transform ${validateStep(step) ? 'group-hover:translate-x-2' : ''}`} /></>
+                    <>CONTINUER <ArrowRight className={`w-4 h-4 md:w-5 md:h-5 transition-transform ${validateStep(step) ? 'group-hover:translate-x-2' : ''}`} /></>
                   )}
                 </button>
               </div>
           </div>
-
       </div>
     </div>
   );

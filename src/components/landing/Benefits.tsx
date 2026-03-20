@@ -18,7 +18,7 @@ const Benefits = () => (
         <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#0B3D91] mb-8">
           LA PLUS-VALUE
         </p>
-        <h2 className="text-[52px] sm:text-[64px] font-black uppercase tracking-tighter leading-[0.9] mb-16 text-[#0B3D91] break-words">
+        <h2 className="text-[40px] md:text-[52px] lg:text-[64px] font-black uppercase tracking-tighter leading-[0.9] mb-16 text-[#0B3D91] break-normal">
           AVANTAGES<br/>PRO.
         </h2>
         <div className="flex flex-col space-y-12">
