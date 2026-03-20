@@ -17,9 +17,18 @@ import CandidatureMatriceTab from "./pages/admin/CandidatureMatriceTab";
 import CandidatureGEDTab from "./pages/admin/CandidatureGEDTab";
 import CollectFlow from "./pages/collect/CollectFlow";
 
+import ConfigError from "./components/common/ConfigError";
+
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  const isConfigured = !!import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_URL !== 'VOTRE_URL_SUPABASE';
+
+  if (!isConfigured) {
+    return <ConfigError />;
+  }
+
+  return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />

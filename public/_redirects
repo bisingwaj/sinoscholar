@@ -1,0 +1,5 @@
+/*
+  # Netlify Redirects
+  # Force all requests to index.html for React Router handling
+*/
+/*    /index.html   200
